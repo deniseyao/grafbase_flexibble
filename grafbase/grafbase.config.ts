@@ -11,7 +11,7 @@ const User = g
       .length({ min: 2, max: 1000 })
       .optional(),
     githubUrl: g.url().optional(),
-    linkedinUrl: g.url().optional(),
+    linkedInUrl: g.url().optional(),
     projects: g
       .relation(() => Project)
       .list()
@@ -19,6 +19,7 @@ const User = g
   })
   .auth((rules) => {
     rules.public().read();
+    rules.private().update();
   });
 
 // @ts-ignore

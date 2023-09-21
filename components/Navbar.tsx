@@ -7,12 +7,20 @@ import { getCurrentUser } from "@/lib/session";
 import AuthProviders from "./AuthProviders";
 import Button from "./Button";
 import ProfileMenu from "./ProfileMenu";
+import { getUserById } from "@/lib/actions";
+import { UserProfile } from "@/common.types";
 
 const Navbar = async () => {
   const session = await getCurrentUser();
 
+  const result = session?.user
+    ? ((await getUserById(session?.user?.id)) as {
+        user?: UserProfile;
+      })
+    : null;
+
   return (
-    <nav className="flexBetween navbar">
+    <nav className="flexBetween navbar relative z-40">
       <div className="flex-1 flexStart gap-10">
         <Link href="/">
           <Image src="/logo.svg" width={116} height={43} alt="logo" />
@@ -29,7 +37,10 @@ const Navbar = async () => {
       <div className="flexCenter gap-4">
         {session?.user ? (
           <>
-            <ProfileMenu session={session} />
+            <ProfileMenu
+              session={session}
+              profileImage={result?.user?.avatarUrl}
+            />
 
             <Link href="/create-project">
               <Button title="Share work" />

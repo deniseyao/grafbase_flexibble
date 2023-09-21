@@ -1,9 +1,11 @@
 type Props = {
   type?: string;
   title: string;
-  state: string;
+  state: string | null;
   placeholder: string;
   isTextArea?: boolean;
+  isDisabled?: boolean;
+  isRequired?: boolean;
   setState: (value: string) => void;
 };
 
@@ -13,6 +15,8 @@ const FormField = ({
   state,
   placeholder,
   isTextArea,
+  isDisabled,
+  isRequired,
   setState,
 }: Props) => {
   return (
@@ -22,18 +26,24 @@ const FormField = ({
       {isTextArea ? (
         <textarea
           placeholder={placeholder}
-          value={state}
-          className="form_field-input"
+          value={state ?? ""}
+          className={`form_field-input ${
+            isDisabled ? "disabled:opacity-50 cursor-not-allowed" : ""
+          }`}
           onChange={(e) => setState(e.target.value)}
+          disabled={isDisabled}
         />
       ) : (
         <input
-          type={type || "text"}
+          type={type ?? "text"}
           placeholder={placeholder}
-          required
-          value={state}
-          className="form_field-input"
+          required={isRequired}
+          value={state ?? ""}
+          className={`form_field-input ${
+            isDisabled ? "disabled:opacity-50 cursor-not-allowed" : ""
+          }`}
           onChange={(e) => setState(e.target.value)}
+          disabled={isDisabled}
         />
       )}
     </div>

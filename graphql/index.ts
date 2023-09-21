@@ -47,7 +47,7 @@ export const createUserMutation = `
 				avatarUrl
 				description
 				githubUrl
-				linkedinUrl
+				linkedInUrl
 				id
 			}
 		}
@@ -143,8 +143,37 @@ export const getUserQuery = `
       avatarUrl
       description
       githubUrl
-      linkedinUrl
+      linkedInUrl
     }
+  }
+`;
+
+export const getUserByIdQuery = `
+  query GetUser($id: ID!) {
+    user(by: { id: $id }) {
+      id
+      name
+      email
+      avatarUrl
+      description
+      githubUrl
+      linkedInUrl
+    }
+  }
+`;
+
+export const updateUserMutation = `
+  mutation UserUpdate($id: ID!, $input: UserUpdateInput!) {
+	userUpdate(by: {id: $id}, input: $input) {
+	  user {
+		name
+		email
+		avatarUrl
+	  	description
+		linkedInUrl
+		githubUrl
+	  }
+	}
   }
 `;
 
@@ -157,7 +186,7 @@ export const getProjectsOfUserQuery = `
       description
       avatarUrl
       githubUrl
-      linkedinUrl
+      linkedInUrl
       projects(last: $last) {
         edges {
           node {

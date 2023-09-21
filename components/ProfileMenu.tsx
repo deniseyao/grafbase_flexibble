@@ -8,7 +8,12 @@ import { Menu, Transition } from "@headlessui/react";
 
 import { SessionInterface } from "@/common.types";
 
-const ProfileMenu = ({ session }: { session: SessionInterface }) => {
+type Props = {
+  session: SessionInterface;
+  profileImage?: string | null;
+};
+
+const ProfileMenu = ({ session, profileImage }: Props) => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -18,15 +23,13 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
           className="flexCenter"
           onMouseEnter={() => setOpenModal(true)}
         >
-          {session?.user?.image && (
-            <Image
-              src={session.user.image}
-              width={40}
-              height={40}
-              className="rounded-full"
-              alt="user profile image"
-            />
-          )}
+          <Image
+            src={profileImage ?? "/avatar.svg"}
+            width={40}
+            height={40}
+            className="rounded-full"
+            alt="user profile image"
+          />
         </Menu.Button>
 
         <Transition
@@ -41,19 +44,17 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
         >
           <Menu.Items
             static
-            className="flexStart profile_menu-items"
+            className="flexStart profile_menu-items z-30"
             onMouseLeave={() => setOpenModal(false)}
           >
             <div className="flex flex-col items-center gap-y-4">
-              {session?.user?.image && (
-                <Image
-                  src={session?.user?.image}
-                  className="rounded-full"
-                  width={80}
-                  height={80}
-                  alt="profile Image"
-                />
-              )}
+              <Image
+                src={profileImage ?? "/avatar.svg"}
+                className="rounded-full"
+                width={80}
+                height={80}
+                alt="profile Image"
+              />
               <p className="font-semibold">{session?.user?.name}</p>
             </div>
 
@@ -68,7 +69,7 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
               </Menu.Item>
               <Menu.Item>
                 <Link
-                  href={`/profile/${session?.user?.id}`}
+                  href={`/profile/settings/${session?.user?.id}`}
                   className="text-sm"
                 >
                   Settings

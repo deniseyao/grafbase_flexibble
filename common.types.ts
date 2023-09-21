@@ -29,10 +29,10 @@ export interface UserProfile {
   id: string;
   name: string;
   email: string;
-  description: string | null;
+  description: string;
   avatarUrl: string;
-  githubUrl: string | null;
-  linkedInUrl: string | null;
+  githubUrl: string;
+  linkedInUrl: string;
   projects: {
     edges: { node: ProjectInterface }[];
     pageInfo: {
@@ -42,6 +42,15 @@ export interface UserProfile {
       endCursor: string;
     };
   };
+}
+
+export interface UserFormState {
+  name: string;
+  email: string;
+  description: string;
+  avatarUrl: string;
+  githubUrl: string;
+  linkedInUrl: string;
 }
 
 export interface SessionInterface extends Session {
@@ -60,4 +69,13 @@ export interface ProjectForm {
   liveSiteUrl: string;
   githubUrl: string;
   category: string;
+}
+
+export interface UserForm {
+  name: string;
+  email: string;
+  description: string;
+  avatarUrl: string;
+  githubUrl: string;
+  linkedInUrl: string;
 }
